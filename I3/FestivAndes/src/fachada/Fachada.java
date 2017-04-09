@@ -12,6 +12,7 @@ import java.util.Properties;
 import javax.print.attribute.standard.RequestingUserName;
 
 import dao.ConsultasDAO;
+import vos.Abono;
 import vos.Boleta;
 import vos.Compra;
 import vos.Espectaculo;
@@ -412,6 +413,73 @@ public class Fachada {
 			this.conn = darConexion();
 			daoconsultas.setConn(conn);
 			daoconsultas.devolverBoleta(boleta);
+			conn.commit();
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoconsultas.cerrarConneccion(conn);
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 * @param abono
+	 * @throws Exception
+	 */
+	public void devolverAbono(Abono abono) throws Exception {
+		ConsultasDAO  daoconsultas= new ConsultasDAO();
+		try 
+		{
+			//////Transacci�n
+			this.conn = darConexion();
+			daoconsultas.setConn(conn);
+			daoconsultas.devolverAbono(abono);
+			conn.commit();
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoconsultas.cerrarConneccion(conn);
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	public void registrarAbono(Abono abono) throws Exception {
+		ConsultasDAO  daoconsultas= new ConsultasDAO();
+		try 
+		{
+			//////Transacci�n
+			this.conn = darConexion();
+			daoconsultas.setConn(conn);
+			daoconsultas.registrarAbono(abono);
 			conn.commit();
 
 		} catch (SQLException e) {

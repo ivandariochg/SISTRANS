@@ -24,6 +24,7 @@ import javax.naming.InitialContext;
 
 
 
+import vos.Abono;
 import vos.Boleta;
 import vos.Compra;
 import vos.Espectaculo;
@@ -372,6 +373,10 @@ boolean a = false;
 	//---------------------------------------------------------------------
 	//-------------------------------------------------------------------I3
 
+	/**
+	 * 
+	 * @param boleta
+	 */
 	public void devolverBoleta(Compra boleta) {
 		// TODO Auto-generated method stub
 		String sql = "UPDATE SILLA SET ID_COMPRA = 00 WHERE ID = " + boleta.getSilla().getId() + ";";
@@ -383,5 +388,31 @@ boolean a = false;
 		PreparedStatement prepStmt2 = conexion.prepareStatement(sql2);
 		recursos.add(prepStmt2);
 		prepStmt2.executeQuery();
+	}
+
+	/**
+	 * 
+	 * @param abono
+	 */
+	public void devolverAbono(Abono abono) {
+		// TODO Auto-generated method stub
+		ArrayList<Compra> boletas = abono.getBoletas();
+		for (int i = 0; i < boletas.size(); i++) {
+			Compra a = boletas.get(i);
+			devolverBoleta(a);
+		}
+	}
+
+	/**
+	 * 
+	 * @param abono
+	 */
+	public void registrarAbono(Abono abono) {
+		// TODO Auto-generated method stub
+		ArrayList<Compra> boletas = abono.getBoletas();
+		for (int i = 0; i < boletas.size(); i++) {
+			Compra a = boletas.get(i);
+			addCompra(a);
+		}
 	}
 }
