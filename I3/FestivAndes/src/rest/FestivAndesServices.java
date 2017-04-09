@@ -15,6 +15,8 @@ import javax.ws.rs.core.Response;
 
 import fachada.Fachada;
 import tm.VideoAndesMaster;
+import vos.Abono;
+import vos.Compra;
 import vos.Funcion;
 import vos.ListaFunciones;
 import vos.ListaSitios;
@@ -74,7 +76,7 @@ public class FestivAndesServices {
 	@Path("/compra")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addCompra(Boleta compra) {
+	public Response addCompra(Compra compra) {
 		Fachada tm = new Fachada(getPath());
 		try {
 			tm.addCompra(compra);
@@ -118,5 +120,47 @@ public class FestivAndesServices {
 	}
 	
 	//-------------------------------------------------------------------------I3
+	
+	@PUT
+	@Path("/abono")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response registrarAbono(Abono compra) {
+		Fachada tm = new Fachada(getPath());
+		try {
+			tm.registrarAbono(compra);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(compra).build();
+	}
+	
+	@POST
+	@Path("/abono")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response devolverAbono(Abono abono) {
+		Fachada tm = new Fachada(getPath());
+		try {
+			tm.devolverAbono(abono);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(funcion).build();
+	}
+	
+	@POST
+	@Path("/boleta")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response devolverBoleta(Compra boleta) {
+		Fachada tm = new Fachada(getPath());
+		try {
+			tm.devolverBoleta(boleta);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(funcion).build();
+	}
 }
 
