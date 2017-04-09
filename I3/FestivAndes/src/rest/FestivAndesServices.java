@@ -65,23 +65,6 @@ public class FestivAndesServices {
 	}
 	
 	
-	//-----------------------------------------------
-	
-	@GET
-	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getPrsonMostKaufen( ) {
-		Fachada tm = new Fachada(getPath());
-		ListaSitios sitios;
-		try {
-			sitios = tm.consultarMostKaufen();
-		} catch (Exception e) {
-			return Response.status(500).entity(doErrorMessage(e)).build();
-		}
-		return Response.status(200).entity(sitios).build();
-	}
-	
-	//-----------------------------------------------
-	
 	/**
 	 * 
 	 * @param compra
@@ -133,5 +116,7 @@ public class FestivAndesServices {
 		}
 		return Response.status(200).entity(funcion).build();
 	}
+	
+	//-------------------------------------------------------------------------I3
 }
 

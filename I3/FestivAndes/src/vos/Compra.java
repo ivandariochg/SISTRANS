@@ -6,24 +6,47 @@ public class Compra {
 
 	int id;
 	
-	Persona duenio;
+	double costo;
 	
-	ArrayList<Boleta> boletas;
+	private Silla silla;
+	
+	private Recibo pertence;
 
-	public ArrayList<Boleta> getBoletas() {
-		return boletas;
+	public Compra(double costo, int id,Silla silla) {
+		super();
+		this.costo = costo;
+		this.id = id;
+		this.silla = silla;
+		
 	}
 
-	public void setBoletas(ArrayList<Boleta> boletas) {
-		this.boletas = boletas;
+	public double getCosto() {
+		return costo;
 	}
 
-	public Persona getDuenio() {
-		return duenio;
+	public void setCosto(double costo) {
+		this.costo = costo;
 	}
 
-	public void setDuenio(Persona duenio) {
-		this.duenio = duenio;
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	public Silla getSilla() {
+		return silla;
+	}
+	public void agregarSilla(Silla mSillas) {
+		this.silla = silla;;
+	}
+	public Recibo getDuenio(){
+		return pertence;
+	}
+	
+	public void setPertenece(Recibo duenio){
+		this.pertence = duenio;
 	}
 	
 	

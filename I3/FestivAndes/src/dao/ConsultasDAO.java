@@ -25,6 +25,7 @@ import javax.naming.InitialContext;
 
 
 import vos.Boleta;
+import vos.Compra;
 import vos.Espectaculo;
 import vos.Funcion;
 import vos.Persona;
@@ -302,7 +303,7 @@ public class ConsultasDAO {
 	 * @param compra
 	 * @throws SQLException
 	 */
-	public void addCompra(Boleta compra) throws SQLException {
+	public void addCompra(Compra compra) throws SQLException {
 		// TODO Auto-generated method stub
 boolean a = false;
 		
@@ -323,7 +324,7 @@ boolean a = false;
 		if(a == true){
 			String sql2 = "INSERT INTO COMPRA VALUES(";
 			sql += compra.getId() + ", ";
-			sql += compra.getDuenio().getId() + ", ";
+			sql += compra.getDuenio().getDuenio().getId() + ", ";
 			sql += compra.getCosto() + ")";
 			
 			PreparedStatement prepStmt2 = conexion.prepareStatement(sql2);
@@ -366,8 +367,21 @@ boolean a = false;
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 	}
-	
-	public void geberarReporteMostPersonKaufen(){
+
+	//---------------------------------------------------------------------
+	//---------------------------------------------------------------------
+	//-------------------------------------------------------------------I3
+
+	public void devolverBoleta(Compra boleta) {
+		// TODO Auto-generated method stub
+		String sql = "UPDATE SILLA SET ID_COMPRA = 00 WHERE ID = " + boleta.getSilla().getId() + ";";
+		PreparedStatement prepStmt = conexion.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
 		
+		String sql2 = "INSTER INTO DEVOLUCION(ID_BOLETA) VALUES(" + boleta.getId() + ");";
+		PreparedStatement prepStmt2 = conexion.prepareStatement(sql2);
+		recursos.add(prepStmt2);
+		prepStmt2.executeQuery();
 	}
 }

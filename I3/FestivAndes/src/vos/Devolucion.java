@@ -4,13 +4,13 @@ public class Devolucion {
 		
 	int id;
 	
-	Boleta boleta;
+	Compra boleta;
 
-	public Boleta getBoleta() {
+	public Compra getBoleta() {
 		return boleta;
 	}
 
-	public void setBoleta(Boleta boleta) {
+	public void setBoleta(Compra boleta) {
 		this.boleta = boleta;
 	}
 	

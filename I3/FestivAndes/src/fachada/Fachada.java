@@ -12,6 +12,7 @@ import java.util.Properties;
 import javax.print.attribute.standard.RequestingUserName;
 
 import dao.ConsultasDAO;
+import vos.Boleta;
 import vos.Compra;
 import vos.Espectaculo;
 import vos.Funcion;
@@ -396,32 +397,37 @@ public class Fachada {
 			}
 		}
 	}
+	
+	//--------------------------------------------------------------------I3
+	/**
+	 * 
+	 * @param boleta
+	 * @throws Exception
+	 */
+	public void devolverBoleta(Compra boleta) throws Exception {
+		ConsultasDAO  daoconsultas= new ConsultasDAO();
+		try 
+		{
+			//////Transacci�n
+			this.conn = darConexion();
+			daoconsultas.setConn(conn);
+			daoconsultas.devolverBoleta(boleta);
+			conn.commit();
 
-	public ListaSitios consultarMostKaufen() {
-		// TODO Auto-generated method stub
-		ConsultasDAO daoConsulta= new ConsultasDAO();
-		try{
-			this.conn=darConexion();
-			daoConsulta.setConn(conn);
-			daoConsulta.generarReporteMostPersonKaufen;
-		}catch (SQLException e) {
-			// TODO: handle exception
+		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
 			e.printStackTrace();
 			throw e;
-		}catch (Exception e) {
-			// TODO: handle exception
+		} catch (Exception e) {
 			System.err.println("GeneralException:" + e.getMessage());
 			e.printStackTrace();
 			throw e;
-		}finally{
+		} finally {
 			try {
-				daoConsulta.cerrarRecursos();
+				daoconsultas.cerrarConneccion(conn);
 				if(this.conn!=null)
 					this.conn.close();
-
 			} catch (SQLException exception) {
-				// TODO: handle exception
 				System.err.println("SQLException closing resources:" + exception.getMessage());
 				exception.printStackTrace();
 				throw exception;
