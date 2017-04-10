@@ -30,6 +30,7 @@ import vos.Compra;
 import vos.Espectaculo;
 import vos.Funcion;
 import vos.Persona;
+import vos.Recibo;
 import vos.Silla;
 import vos.Sitio;
 
@@ -341,7 +342,39 @@ boolean a = false;
 			System.out.println("La silla con id " + compra.getSilla().getId() + " ya esta vendida.");
 		}
 	}
+	/**
+	 *RF10  REGISTRAR COMPRA MÚLTIPLE DE BOLETAS 
+	 * @param multbol
+	 * @throws SQLException 
+	 */
 
+	public void registrarCompraMultiplesBoletas(Recibo multbol) throws SQLException
+	{
+		ArrayList<Compra> boletas= multbol.getBoletas();
+		for (int i = 0; i < boletas.size(); i++) {
+			Compra bol= boletas.get(i);
+			addCompra(bol);
+		}
+	}
+	/**
+	 * RF14 - CANCELAR UNA FUNCIÓN
+	 * @throws SQLException 
+	 */
+	public void cancelarUnaFuncion(Funcion fun, Abono s) throws SQLException
+	{
+		String sql="DELETE FROM FUNCION WHERE nombre= '"+fun+"'";
+		System.out.println("SQL stmt:"+sql);
+		PreparedStatement prepStmt= conexion.prepareStatement(sql);
+		recursos.add(prepStmt);
+		prepStmt.executeQuery();
+		
+		ArrayList<Compra> boletas = s.getBoletas();
+		for (int i = 0; i < boletas.size(); i++) {
+			Compra a = boletas.get(i);
+			devolverBoleta(a);
+		}
+	}
+	
 	/**
 	 * 
 	 * @param funcion
@@ -376,8 +409,9 @@ boolean a = false;
 	/**
 	 * 
 	 * @param boleta
+	 * @throws SQLException 
 	 */
-	public void devolverBoleta(Compra boleta) {
+	public void devolverBoleta(Compra boleta) throws SQLException {
 		// TODO Auto-generated method stub
 		String sql = "UPDATE SILLA SET ID_COMPRA = 00 WHERE ID = " + boleta.getSilla().getId() + ";";
 		PreparedStatement prepStmt = conexion.prepareStatement(sql);
@@ -393,8 +427,9 @@ boolean a = false;
 	/**
 	 * 
 	 * @param abono
+	 * @throws SQLException 
 	 */
-	public void devolverAbono(Abono abono) {
+	public void devolverAbono(Abono abono) throws SQLException {
 		// TODO Auto-generated method stub
 		ArrayList<Compra> boletas = abono.getBoletas();
 		for (int i = 0; i < boletas.size(); i++) {
@@ -406,8 +441,9 @@ boolean a = false;
 	/**
 	 * 
 	 * @param abono
+	 * @throws SQLException 
 	 */
-	public void registrarAbono(Abono abono) {
+	public void registrarAbono(Abono abono) throws SQLException {
 		// TODO Auto-generated method stub
 		ArrayList<Compra> boletas = abono.getBoletas();
 		for (int i = 0; i < boletas.size(); i++) {
