@@ -16,5 +16,8 @@ public class Abono {
 		this.boletas = boletas;
 	}
 	
+	public int getId(){
+		return id;
+	}
 	
 }
