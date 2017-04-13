@@ -20,6 +20,7 @@ import vos.Funcion;
 import vos.ListaFunciones;
 import vos.ListaSitios;
 import vos.Persona;
+import vos.Recibo;
 import vos.Sitio;
 
 public class Fachada {
@@ -502,4 +503,71 @@ public class Fachada {
 			}
 		}
 	}
+	
+	public void registrarCompraMultiple(Recibo multbol) throws Exception
+	{
+
+		ConsultasDAO daoConsulta= new ConsultasDAO();
+		try{
+			this.conn=darConexion();
+			daoConsulta.setConn(conn);
+			daoConsulta.registrarCompraMultiplesBoletas(multbol);
+		}catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}finally{
+			try {
+				daoConsulta.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+
+			} catch (SQLException exception) {
+				// TODO: handle exception
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}	
+	}
+	
+	public void cancelarUnaFuncion(Funcion fun, Abono s)throws Exception
+	{
+
+		ConsultasDAO daoConsulta= new ConsultasDAO();
+		try{
+			this.conn=darConexion();
+			daoConsulta.setConn(conn);
+			daoConsulta.cancelarUnaFuncion(fun, s);
+		}catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}finally{
+			try {
+				daoConsulta.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+
+			} catch (SQLException exception) {
+				// TODO: handle exception
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
 }

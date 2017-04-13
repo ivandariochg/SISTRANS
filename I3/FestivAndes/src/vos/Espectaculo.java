@@ -22,6 +22,10 @@ public class Espectaculo {
 	
 	ArrayList categorias;
 	
+	int asistenciaTotal=0;
+	
+	int asistenciaRegistrados=0;
+	
 	private ArrayList<Compania> companias;
 	
 	private ArrayList<Funcion> funciones;
@@ -40,6 +44,7 @@ public class Espectaculo {
 		funciones= new ArrayList<>();
 		this.traduccion = traduccion;
 		this.categorias = new <Categoria> ArrayList();
+		
 	}
 
 	public String getNombre() {
@@ -120,5 +125,17 @@ public class Espectaculo {
     {
     	funciones.add(mFuncion);
     }
+    
+    public int darAsistenciaTotal()
+    {
+    	return asistenciaTotal;
+    }
+    
+    public int darAsistenciaRegistrados()
+    {
+    	return asistenciaRegistrados;
+    }
+    
+    
 	
 }

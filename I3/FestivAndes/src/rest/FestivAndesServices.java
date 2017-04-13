@@ -21,6 +21,7 @@ import vos.Funcion;
 import vos.ListaFunciones;
 import vos.ListaSitios;
 import vos.Persona;
+import vos.Recibo;
 import vos.Sitio;
 import vos.Video;
 
@@ -120,6 +121,19 @@ public class FestivAndesServices {
 	}
 	
 	//-------------------------------------------------------------------------I3
+	@PUT
+	@Path("/multiples")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response registrarCompraMultiple(Recibo multbol) {
+		Fachada tm = new Fachada(getPath());
+		try {
+			tm.registrarCompraMultiple(multbol);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(multbol).build();
+	}
 	
 	@PUT
 	@Path("/abono")
@@ -162,5 +176,20 @@ public class FestivAndesServices {
 		}
 		return Response.status(200).entity(funcion).build();
 	}
+	
+	@DELETE
+	@Path("/boleta")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response cancelarUnaFuncion(Funcion fun, Abono s) {
+		Fachada tm = new Fachada(getPath());
+		try {
+			tm.cancelarUnaFuncion(fun, s);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(fun,s).build();
+	}
+	
 }
 

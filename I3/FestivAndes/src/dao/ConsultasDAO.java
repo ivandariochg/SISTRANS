@@ -26,6 +26,7 @@ import javax.naming.InitialContext;
 
 import vos.Abono;
 import vos.Boleta;
+import vos.Compania;
 import vos.Compra;
 import vos.Espectaculo;
 import vos.Funcion;
@@ -511,5 +512,38 @@ public class ConsultasDAO {
 		PreparedStatement prepStmt = conexion.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
+	}
+	
+	public ArrayList<Funcion> funcionesAsistidasPorClienteRegistrado(Funcion fun, Compra boldev)throws Exception
+	{
+		ArrayList<Funcion> funcionesAsis= new ArrayList<>();
+		
+	}
+	public ArrayList<Compania> consultaCompania(String nombre, Persona representante, String pais, String web, int id) throws SQLException
+	{
+		ArrayList<Compania> companias= new ArrayList<>();
+		Espectaculo esp;
+		Compra cmp;
+		Sitio sto;
+		
+	    String sql="SELECT * FROM compania NATURAL JOIN espectaculo";
+	    
+	    System.out.println("SQL stmt:"+sql);
+		PreparedStatement prepStmt= conexion.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs=prepStmt.executeQuery();
+		
+		while (rs.next())
+		{
+			
+			int asisTotal=esp.darAsistenciaTotal();
+			int asisRegistrados=esp.darAsistenciaRegistrados();
+			double dineroGeneradoTaquilla=esp.darAsistenciaTotal()*cmp.getCosto();
+			double porcentajeOcupacionPorSitio=sto.getCapacidad()/sto.getLocalidades().size();
+			
+			companias.add(new Compania(nombre, representante, pais, web, id));
+		}
+		
+		return companias;
 	}
 }
