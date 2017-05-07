@@ -546,4 +546,16 @@ public class ConsultasDAO {
 		
 		return companias;
 	}
+
+	//-------------------------------------------------------------I4
+	
+	public void darLosBuenos() {
+		
+		String sql="SELECT P.ID, P.NOMBRE FROM PERSONA P NATURAL JOIN COMPRA NATUARL JOIN SILLA NATURAL JOIN LOCALIDAD L WHERE L.NOMBRE = 'VIP'";
+	    
+	    System.out.println("SQL stmt:"+sql);
+		PreparedStatement prepStmt= conexion.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs=prepStmt.executeQuery();
+	}
 }
