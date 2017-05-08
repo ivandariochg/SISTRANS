@@ -30,6 +30,7 @@ import vos.Compania;
 import vos.Compra;
 import vos.Espectaculo;
 import vos.Funcion;
+import vos.Localidad;
 import vos.Persona;
 import vos.Recibo;
 import vos.Silla;
@@ -549,7 +550,78 @@ public class ConsultasDAO {
 
 	//-------------------------------------------------------------I4
 	
-	public void darLosBuenos() {
+	//RFC9. CONSULTAR ASISTENCIA A FESTIVANDES
+	public void consultAsistenciaFestivandes(Persona per, Funcion fun, Compania com, Compra compr) throws SQLException
+	{    boolean asistieron=false;
+		String sql="SELECT * FROM PERSONA P NATURAL JOIN FUNCION NATURAL JOIN COMPANIA NATURAL JOIN WHERE P.ID= '"+ per.getId()+ "'AND COMPANIA.ID='"+ com.getId()+"'AND COMPRA.ID='"+compr.getId()+
+				"'AND COMPRA.ID_PERSONA='"+per.getId()+"'AND COMPRA_ID_FUNCION='"+fun.getId()+"'AND FUNCION_FECHA='"+fun.getFecha();   
+		if(asistieron=true){
+		if(per!=null)
+		{
+			sql+="ORDER BY PERSONA_ID GROUP BY PERSONA_ID";
+		}
+		if(fun!=null)
+		{
+			sql+="ORBER BY FUNCION_ID GROUP BY FUNCION_ID";
+		}
+		if(com!=null)
+		{
+			sql+="ORBER BY COMPANIA_ID GROUP BY COMPANIA_ID";
+		}
+		}
+		System.out.println("SQL stmt: "+sql);
+		PreparedStatement prepStmt= conexion.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs= prepStmt.executeQuery();	
+
+	}
+	
+	//RFC10. CONSULTAR ASISTENCIA A FESTIVANDES – RFC9-v2
+	public void consultAsistenciaVersion2(Persona per, Funcion fun, Compania com, Compra compr)throws SQLException
+	{
+		  boolean asistieron=true;
+			String sql="SELECT * FROM PERSONA P NATURAL JOIN FUNCION NATURAL JOIN COMPANIA NATURAL JOIN WHERE NOT P.ID= '"+ per.getId()+ "'AND COMPANIA.ID='"+ com.getId()+"'AND COMPRA.ID='"+compr.getId()+
+					"'AND COMPRA.ID_PERSONA='"+per.getId()+"'AND COMPRA_ID_FUNCION='"+fun.getId()+"'AND FUNCION_FECHA='"+fun.getFecha();   
+			if(asistieron=false){
+			if(per!=null)
+			{
+				sql+="ORDER BY PERSONA_ID GROUP BY PERSONA_ID";
+			}
+			if(fun!=null)
+			{
+				sql+="ORBER BY FUNCION_ID GROUP BY FUNCION_ID";
+			}
+			if(com!=null)
+			{
+				sql+="ORBER BY COMPANIA_ID GROUP BY COMPANIA_ID";
+			}
+			}
+			System.out.println("SQL stmt: "+sql);
+			PreparedStatement prepStmt= conexion.prepareStatement(sql);
+			recursos.add(prepStmt);
+			ResultSet rs= prepStmt.executeQuery();
+	}
+	
+	//RFC11. CONSULTAR COMPRAS DE BOLETAS
+	public void consultCompraBoletas(Persona per, Date fecha, Espectaculo esp,Localidad loc, Funcion fun, Sitio sit) throws SQLException
+	{
+		if(per.getTipo()==1)
+		{
+			if(fecha.equals(fun.getFecha()))
+			{
+			String sql="SELECT E.NOMBRE, FUN.FECHA,FUN.DIA, FUN.SITIO, COUNT COMPRA_ID, PERSONAS_ID=COMPRA.ID_PERSONAS "
+					+ "FROM ESPECTACULOS E NATURAL JOIN FUNCION FUN NATURAL JOIN LOCALIDAD LOC WHERE FUN.FECHA= '"+fun.getFecha()+"AND ESPECTAUCLO.DESCRIPCION='"
+					+esp.getDescripcion()+"'AND LOCALIDAD.TIPO = "+loc.getNombre();
+			System.out.println("SQL stmt: "+sql);
+			PreparedStatement prepStmt= conexion.prepareStatement(sql);
+			recursos.add(prepStmt);
+			ResultSet rs= prepStmt.executeQuery();
+			}
+		}
+		
+	}
+	//rfc12
+	public void darLosBuenos()throws SQLException {
 		
 		String sql="SELECT P.ID, P.NOMBRE FROM PERSONA P NATURAL JOIN COMPRA NATUARL JOIN SILLA NATURAL JOIN LOCALIDAD L WHERE L.NOMBRE = 'VIP'";
 	    

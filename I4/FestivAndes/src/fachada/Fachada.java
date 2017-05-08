@@ -14,11 +14,13 @@ import javax.print.attribute.standard.RequestingUserName;
 import dao.ConsultasDAO;
 import vos.Abono;
 import vos.Boleta;
+import vos.Compania;
 import vos.Compra;
 import vos.Espectaculo;
 import vos.Funcion;
 import vos.ListaFunciones;
 import vos.ListaSitios;
+import vos.Localidad;
 import vos.Persona;
 import vos.Recibo;
 import vos.Sitio;
@@ -571,8 +573,108 @@ public class Fachada {
 	}
 	
 	//-------------------------------------------------------------------I4
+	//RFC9. CONSULTAR ASISTENCIA A FESTIVANDES
+	public void consultAsistenciaFestivandes(Persona per, Funcion fun, Compania com, Compra compr)throws Exception
+	{
+		ConsultasDAO daoConsulta= new ConsultasDAO();
+		try{
+			this.conn=darConexion();
+			daoConsulta.setConn(conn);
+			daoConsulta.consultAsistenciaFestivandes(per, fun, com, compr);
+		}catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}finally{
+			try {
+				daoConsulta.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+
+			} catch (SQLException exception) {
+				// TODO: handle exception
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
 	
-	public ArrayList<Persona> consultarLosBuenosClientes() throws Exception {
+	//RFC10. CONSULTAR ASISTENCIA A FESTIVANDES – RFC9-v2
+	public void consultAsistenciaVersion2(Persona per, Funcion fun, Compania com, Compra compr)throws SQLException
+	{
+		ConsultasDAO daoConsulta= new ConsultasDAO();
+		try{
+			this.conn=darConexion();
+			daoConsulta.setConn(conn);
+			daoConsulta.consultAsistenciaVersion2(per, fun, com, compr);
+		}catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}finally{
+			try {
+				daoConsulta.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+
+			} catch (SQLException exception) {
+				// TODO: handle exception
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+	
+	//RFC11. CONSULTAR COMPRAS DE BOLETAS
+	public void consultCompraBoletas(Persona per, Date fecha, Espectaculo esp,Localidad loc, Funcion fun, Sitio sit) throws SQLException
+	{
+		ConsultasDAO daoConsulta= new ConsultasDAO();
+		try{
+			this.conn=darConexion();
+			daoConsulta.setConn(conn);
+			daoConsulta.consultCompraBoletas(per, fecha, esp, loc, fun, sit);
+		}catch (SQLException e) {
+			// TODO: handle exception
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}catch (Exception e) {
+			// TODO: handle exception
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		}finally{
+			try {
+				daoConsulta.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+
+			} catch (SQLException exception) {
+				// TODO: handle exception
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+	}
+
+	//	RFC12. CONSULTAR LOS BUENOS CLIENTES
+
+	public void consultarLosBuenosClientes() throws Exception {
 		ConsultasDAO daoConsulta= new ConsultasDAO();
 		try{
 			this.conn=darConexion();
